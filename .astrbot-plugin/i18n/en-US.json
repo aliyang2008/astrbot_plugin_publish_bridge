@@ -1,0 +1,8 @@
+{
+  "views": {
+    "publish": {
+      "title": "Publish Panel",
+      "description": "Inspect platforms and templates, and publish content quickly."
+    }
+  }
+}
