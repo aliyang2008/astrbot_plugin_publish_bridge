@@ -1,0 +1,172 @@
+{
+  "enabled": {
+    "type": "bool",
+    "description": "启用插件",
+    "hint": "关闭后 /发布 指令将不响应。",
+    "default": true
+  },
+  "group_only": {
+    "type": "bool",
+    "description": "仅允许在群聊使用",
+    "hint": "开启后私聊发送 /发布 会被拒绝。",
+    "default": true
+  },
+  "admin_only": {
+    "type": "bool",
+    "description": "仅管理员可用",
+    "hint": "建议保持开启，避免群成员随意向外部平台发布内容。",
+    "default": true
+  },
+  "admin_users": {
+    "type": "string",
+    "description": "管理员白名单",
+    "hint": "当群主/管理员身份未被协议端识别时，在这里填发送者 ID（QQ 号或 openid，多个用逗号分隔）即可使用发布指令。",
+    "default": ""
+  },
+  "strict_admin": {
+    "type": "bool",
+    "description": "严格白名单模式",
+    "hint": "开启后只有「管理员白名单」中的 ID 可以使用发布指令，忽略平台角色判断。",
+    "default": false
+  },
+  "default_platform": {
+    "type": "string",
+    "description": "默认发布平台",
+    "hint": "填写下发平台列表中的平台名称。指令不写平台名时使用该平台；留空则必须显式指定平台。",
+    "default": ""
+  },
+  "show_response": {
+    "type": "bool",
+    "description": "在回复中显示平台响应",
+    "hint": "开启后会把平台返回内容（截断到 300 字）附在成功回复里，便于调试。",
+    "default": false
+  },
+  "auto_fetch_link": {
+    "type": "bool",
+    "description": "纯链接自动抓取正文",
+    "hint": "正文是单个 http(s) 链接时，自动抓取该页面的文章正文再发布；关闭则直接发布链接。",
+    "default": true
+  },
+  "link_fetch_timeout": {
+    "type": "int",
+    "description": "链接抓取超时（秒）",
+    "hint": "范围 5-60。",
+    "default": 20
+  },
+  "link_max_chars": {
+    "type": "int",
+    "description": "抓取正文最大字数",
+    "hint": "范围 1000-100000，超出部分截断。",
+    "default": 20000
+  },
+  "platforms": {
+    "type": "template_list",
+    "description": "发布平台列表",
+    "hint": "每个平台配置一条。平台名称用于 /发布 <平台名> <内容> 中指定目标。",
+    "templates": {
+      "platform": {
+        "name": "发布平台",
+        "display_item": "name",
+        "hide_hint_in_list": true,
+        "items": {
+          "name": {
+            "type": "string",
+            "description": "平台名称",
+            "hint": "用于指令中指定平台，如 blog、xiaohongshu、website。",
+            "default": ""
+          },
+          "url": {
+            "type": "string",
+            "description": "发布 API 地址",
+            "hint": "完整 URL，例如 https://api.example.com/v1/posts",
+            "default": ""
+          },
+          "method": {
+            "type": "string",
+            "description": "HTTP 方法",
+            "options": [
+              "POST",
+              "PUT",
+              "PATCH"
+            ],
+            "default": "POST"
+          },
+          "auth_type": {
+            "type": "string",
+            "description": "鉴权方式",
+            "hint": "bearer=Authorization: Bearer <token>；header=自定义请求头；md5_sign=appid+timestamp+secret 的 MD5 签名；none=不带鉴权。",
+            "options": [
+              "bearer",
+              "header",
+              "md5_sign",
+              "none"
+            ],
+            "default": "bearer"
+          },
+          "appid": {
+            "type": "string",
+            "description": "AppID / 应用 ID",
+            "hint": "仅鉴权方式为 md5_sign 时使用，与 Token/Secret 配对。",
+            "default": ""
+          },
+          "token": {
+            "type": "string",
+            "description": "Token / API Key / Secret",
+            "hint": "bearer/header 模式填令牌；md5_sign 模式填 appsecret。建议使用平台提供的最小权限令牌。",
+            "default": "",
+            "secret": true
+          },
+          "auth_header": {
+            "type": "string",
+            "description": "鉴权请求头名称",
+            "hint": "仅鉴权方式为 header 时生效，例如 X-API-Key。",
+            "default": "X-API-Key"
+          },
+          "content_field": {
+            "type": "string",
+            "description": "正文参数名",
+            "hint": "正文写入请求体的字段名；支持嵌套路径，如 data.content。",
+            "default": "content"
+          },
+          "title_field": {
+            "type": "string",
+            "description": "标题参数名",
+            "hint": "留空表示不需要标题。填写后指令内容按「标题 | 正文」或「第一行标题 + 后续正文」解析，如 data.title。",
+            "default": ""
+          },
+          "html_content": {
+            "type": "bool",
+            "description": "正文转换为 HTML",
+            "hint": "开启后把纯文本按行包成 <p> 标签；如果正文本身以 < 开头则原样保留。",
+            "default": false
+          },
+          "extra_headers": {
+            "type": "text",
+            "description": "额外请求头",
+            "hint": "JSON 对象字符串，例如 {\"X-Source\": \"qq\"}。留空或 {} 表示不添加。",
+            "default": "{}"
+          },
+          "extra_body": {
+            "type": "text",
+            "description": "额外请求体字段",
+            "hint": "JSON 对象字符串，会与正文合并，例如 {\"visibility\": \"public\"}。",
+            "default": "{}"
+          },
+          "timeout": {
+            "type": "int",
+            "description": "请求超时（秒）",
+            "hint": "范围 1-120。",
+            "default": 15
+          },
+          "verify_ssl": {
+            "type": "bool",
+            "description": "校验 HTTPS 证书",
+            "hint": "只有在对接内网自签名证书平台时才建议关闭。",
+            "default": true
+          }
+        }
+      }
+    },
+    "default": []
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "views": {
+    "publish": {
+      "title": "发布面板",
+      "description": "查看平台、模板并快速发布内容。"
+    }
+  }
+}

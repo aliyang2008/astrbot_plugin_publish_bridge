@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>发布面板</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <main class="page">
+    <header class="page-header">
+      <div>
+        <h1 id="page-title">发布面板</h1>
+        <p id="page-desc" class="muted">查看平台、模板并快速发布内容。</p>
+      </div>
+      <span id="version" class="badge"></span>
+    </header>
+
+    <section id="stats" class="stats" aria-label="概览"></section>
+
+    <section class="card">
+      <div class="card-head">
+        <h2>发布模板</h2>
+        <span class="muted">模板为内置固定格式</span>
+      </div>
+      <div class="table-wrap">
+        <table id="templates" aria-label="发布模板"></table>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="card-head">
+        <h2>发布平台</h2>
+        <span class="muted">API 地址与鉴权方式</span>
+      </div>
+      <div class="table-wrap">
+        <table id="platforms" aria-label="发布平台"></table>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="card-head">
+        <h2>快捷发布</h2>
+        <span class="muted">正文为单个链接时会自动抓取文章正文</span>
+      </div>
+      <form id="publish-form" class="form">
+        <label>
+          目标
+          <select id="target" required></select>
+        </label>
+        <label>
+          标题
+          <input id="title" type="text" placeholder="至少 3 个字符" required>
+        </label>
+        <label>
+          正文
+          <textarea id="body" rows="7" placeholder="输入正文；如果只填一个 http(s) 链接，会自动抓取文章正文"></textarea>
+        </label>
+        <label>
+          附加参数（可选）
+          <input id="params" type="text" placeholder="price=9.9, amount=10, unit=件">
+        </label>
+        <div class="actions">
+          <button type="button" id="preview-btn" class="btn ghost">预览请求</button>
+          <button type="submit" id="publish-btn" class="btn primary">发布</button>
+        </div>
+      </form>
+      <pre id="result" class="result" hidden></pre>
+    </section>
+  </main>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

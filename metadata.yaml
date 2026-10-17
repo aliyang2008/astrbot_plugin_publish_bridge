@@ -1,0 +1,24 @@
+name: astrbot_plugin_publish_bridge
+display_name: 派为资讯发布
+short_desc: 在 QQ 群用模板指令把内容发布到指定平台的发布 API。
+desc: |
+  在 QQ 群内发送 /发布 指令，将内容通过指定平台提供的 HTTP 发布接口推送出去。
+
+  特性：
+  - 内置固定模板：资讯 / 产品 / 需求，无需配置模板列表
+  - 动态字段：price/amount/unit 等按条传入，支持中文别名
+  - 纯链接自动抓取正文：正文为单个链接时抓取文章内容再发布
+  - 发布预览：只渲染请求体，不真正发送
+  - WebUI 发布面板：查看平台/模板、预览和快捷发布
+  - 多平台配置，可随时在 WebUI 增删
+  - 支持 Bearer / 自定义 Header / MD5 签名 / 无鉴权
+  - 群聊限制 + 管理员权限控制
+  - 异步 HTTP，超时与错误友好提示
+version: 1.4.8
+author: paiwei
+repo: https://github.com/aliyang2008/astrbot_plugin_publish_bridge
+astrbot_version: ">=4.10.4"
+tags:
+  - publish
+  - webhook
+  - qq
